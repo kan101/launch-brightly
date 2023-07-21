@@ -15,6 +15,7 @@
               v-if="column.key === 'edition'"
               :icon="['fas', showEditionFilter ? 'xmark' : 'magnifying-glass']"
               class="mr-2 cursor-pointer"
+              id="filter-icon"
               @click.stop="
                 showEditionFilter
                   ? clearFilter()
@@ -22,6 +23,7 @@
               "
             />
             <span
+              data-test="column-label"
               v-if="column.key === 'edition' ? !showEditionFilter : true"
               class="mr-4"
               >{{ column.label }}</span
@@ -30,6 +32,7 @@
               v-if="column.key === 'edition' && showEditionFilter"
               v-model="filterString"
               @keyup="filterEditions"
+              id="filter-input"
               type="text"
               placeholder="Filter Editions"
               class="h-6 bg-transparent border-b mr-4 border-gray-500 focus:outline-none focus:border-blue-500 w-28"

@@ -10,15 +10,23 @@ export function useData(filterString: string) {
     const items: Columns[] = [];
     data.features.items.forEach((item) => {
       items.push({
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        edition: item.FeatureEditions.items[0].edition.name,
-        time_of_screenshot: String(dayjs(item.screenshots.items[0].timeOfCapture).unix())
+        id: item.id || "",
+        name: item.name || "",
+        description: item.description || "",
+        edition: item.FeatureEditions.items[0].edition.name || "",
+        time_of_screenshot: String(dayjs(item.screenshots.items[0].timeOfCapture).unix()) || "",
       });
     });
 
     return items;
+  }
+
+  function tableInfo (): {name: string, tagline: string, description: string} {  
+    return {
+      name: data.name,
+      tagline: data.tagline,
+      description: data.description
+    }
   }
 
   function sortData(data: Columns[], sortBy: string, sortDirection: string) {
@@ -109,5 +117,6 @@ export function useData(filterString: string) {
     cleanData,
     sortData,
     filterData,
+    tableInfo
   };
 }

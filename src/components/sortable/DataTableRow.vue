@@ -4,7 +4,7 @@
     <td>{{ item.name }}</td>
     <td>{{ item.description }}</td>
     <td>{{ item.edition }}</td>
-    <td>{{ dayjs.unix(Number(item.time_of_screenshot)).format("DD MMM, YYYY hh:mm:ss A") }}</td>
+    <td>{{ item.time_of_screenshot !== "" ? (dayjs.unix(Number(item.time_of_screenshot)).format("DD MMM, YYYY hh:mm:ss A")) : "" }}</td>
   </tr>
 </template>
 
