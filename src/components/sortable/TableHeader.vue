@@ -2,10 +2,9 @@
   <thead>
     <tr>
       <th
-        class="cursor-pointer text-base font-normal"
+        class="text-base font-normal"
         v-for="column in columns"
         :key="column.key"
-        @click="sortColumn(column.key)"
       >
         <section
           class="flex justify-between"
@@ -15,20 +14,31 @@
             <font-awesome-icon
               v-if="column.key === 'edition'"
               :icon="['fas', showEditionFilter ? 'xmark' : 'magnifying-glass']"
-              class="mr-2"
-              @click.stop="showEditionFilter = !showEditionFilter"
+              class="mr-2 cursor-pointer"
+              @click.stop="
+                showEditionFilter
+                  ? clearFilter()
+                  : (showEditionFilter = !showEditionFilter)
+              "
             />
-            <span v-if="column.key === 'edition' ? !showEditionFilter : true" class="mr-4">{{ column.label }}</span>
+            <span
+              v-if="column.key === 'edition' ? !showEditionFilter : true"
+              class="mr-4"
+              >{{ column.label }}</span
+            >
             <input
               v-if="column.key === 'edition' && showEditionFilter"
               v-model="filterString"
-              @input="filterEditions"
+              @keyup="filterEditions"
               type="text"
               placeholder="Filter Editions"
               class="h-6 bg-transparent border-b mr-4 border-gray-500 focus:outline-none focus:border-blue-500 w-28"
             />
           </article>
-          <article class="flex flex-col">
+          <article
+            @click="sortColumn(column.key)"
+            class="sort cursor-pointer h-8 w-8 flex flex-col justify-center items-center p-1 rounded-lg"
+          >
             <font-awesome-icon
               class="text-xs"
               v-show="
@@ -53,7 +63,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { ref } from "vue";
 import { sleep } from "../../utils/utils";
 
@@ -76,14 +85,23 @@ const filterString = ref("");
 function sortColumn(key: string) {
   currentSortColumn.value = key;
   currentSortDir.value = currentSortDir.value === "asc" ? "desc" : "asc";
-  emit("sort-table", currentSortColumn.value, currentSortDir.value, filterString.value);
+  emit(
+    "sort-table",
+    currentSortColumn.value,
+    currentSortDir.value,
+    filterString.value
+  );
 }
 
-function filterEditions() {
+async function filterEditions() {
   if (filterString.value.length > 2) {
-    sleep(500).then(() => {
-      emit("sort-table", currentSortColumn.value, currentSortDir.value, filterString.value);
-    });
+    await sleep(500);
+    emit(
+      "sort-table",
+      currentSortColumn.value,
+      currentSortDir.value,
+      filterString.value
+    );
   }
 }
 
@@ -91,6 +109,20 @@ function sortState(key: string) {
   return currentSortColumn.value === key ? currentSortDir.value : "none";
 }
 
+function clearFilter() {
+  showEditionFilter.value = false;
+  filterString.value = "";
+  emit(
+    "sort-table",
+    currentSortColumn.value,
+    currentSortDir.value,
+    filterString.value
+  );
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.sort {
+  background-color: #1d1d1d;
+}
+</style>

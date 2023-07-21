@@ -4,17 +4,19 @@
     <td>{{ item.name }}</td>
     <td>{{ item.description }}</td>
     <td>{{ item.edition }}</td>
-    <td>{{ item.time_of_screenshot }}</td>
+    <td>{{ dayjs.unix(Number(item.time_of_screenshot)).format("DD MMM, YYYY hh:mm:ss A") }}</td>
   </tr>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from "vue";
 import type { Columns } from "../../types.ts";
+import dayjs from "dayjs";
 
+// @ts-ignore
 const props = defineProps({
   rowData: { type: Array as PropType<Columns[]>, required: true },
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

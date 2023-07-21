@@ -17,12 +17,18 @@ import TableRow from "./TableRow.vue";
 import { useData } from "../../hooks/useData";
 import { ref } from "vue";
 
-const filterString = ref("");
-const { cleanData, sortData } = useData(filterString.value);
+const { cleanData, sortData, filterData } = useData("");
 const rowData = ref(cleanData());
+const unfilteredUnsortedData = rowData.value;
 
 function toSort(column: string, direction: string, filterString: string) {
-  sortData(rowData.value, column, direction, filterString);
+  rowData.value = unfilteredUnsortedData;
+
+  if (filterString.length > 2) {
+    rowData.value = filterData(rowData.value, filterString);
+  }
+  
+  sortData(rowData.value, column, direction);
 }
 
 </script>

@@ -1,4 +1,5 @@
 import data from "./baremetrics.json";
+import dayjs from "dayjs";
 import type { Columns } from "../types";
 
 export function useData(filterString: string) {
@@ -13,43 +14,31 @@ export function useData(filterString: string) {
         name: item.name,
         description: item.description,
         edition: item.FeatureEditions.items[0].edition.name,
-        time_of_screenshot: item.screenshots.items[0].timeOfCapture,
+        time_of_screenshot: String(dayjs(item.screenshots.items[0].timeOfCapture).unix())
       });
     });
 
     return items;
   }
 
-  function sortData(
-    data: Columns[],
-    sortBy: string,
-    sortDirection: string,
-    filterString: string
-  ) {
+  function sortData(data: Columns[], sortBy: string, sortDirection: string) {
     if (sortDirection === "asc") {
-      if (filterString !== "") {
-        const filteredData = filterData(data, filterString);
-        return sortAsc(filteredData, sortBy);
-      }
-
       return sortAsc(data, sortBy);
     }
 
     if (sortDirection === "desc") {
-      if (filterString !== "") {
-        const filteredData = filterData(data, filterString);
-        return sortDesc(filteredData, sortBy);
-      }
-
       return sortDesc(data, sortBy);
     }
   }
 
   function sortAsc(data: Columns[], sortBy: string) {
-    console.log("data: ", data)
+    if (sortBy === "time") {
+      return sortTimeAsc(data);
+    }
+
     data.sort((a, b) => {
-      const itemA = a[sortBy].toUpperCase(); // ignore upper and lowercase
-      const itemB = b[sortBy].toUpperCase(); // ignore upper and lowercase
+      const itemA = a[sortBy].toUpperCase();
+      const itemB = b[sortBy].toUpperCase();
       if (itemA < itemB) {
         return -1;
       }
@@ -62,35 +51,63 @@ export function useData(filterString: string) {
   }
 
   function sortDesc(data: Columns[], sortBy: string) {
+
+    if (sortBy === "time") {
+      return sortTimeDesc(data);
+    }
+
     data
       .sort((a, b) => {
-        const itemA = a[sortBy].toUpperCase(); // ignore upper and lowercase
-        const itemB = b[sortBy].toUpperCase(); // ignore upper and lowercase
-        if (itemA < itemB) {
+        const itemA = a[sortBy].toUpperCase();
+        const itemB = b[sortBy].toUpperCase();
+        if (itemA > itemB) {
           return -1;
         }
-        if (itemA > itemB) {
+        if (itemA < itemB) {
           return 1;
         }
 
         return 0;
-      })
-      .reverse();
+      });
+  }
+
+  function sortTimeAsc(data: Columns[]) {
+    data.sort((a, b) => {
+      const itemA = dayjs(a.time_of_screenshot);
+      const itemB = dayjs(b.time_of_screenshot);
+      if (itemA.isBefore(itemB)) {
+        return -1;
+      }
+      if (itemA.isAfter(itemB)) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  function sortTimeDesc(data: Columns[]) {
+    data.sort((a, b) => {
+      const itemA = dayjs(a.time_of_screenshot);
+      const itemB = dayjs(b.time_of_screenshot);
+      if (itemA.isAfter(itemB)) {
+        return -1;
+      }
+      if (itemA.isBefore(itemB)) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   function filterData(data: Columns[], filterString: string) {
-    console.log("filterString: ", filterString);
-    const b = data.filter((item) => {
-      const a = item.edition.toLowerCase().includes(filterString.toLowerCase());
-      return a;
+    return data.filter((item) => {
+      return item.edition.toLowerCase().includes(filterString.toLowerCase());
     });
-
-    console.log("b: ", b);
-    return b;
   }
 
   return {
     cleanData,
     sortData,
+    filterData,
   };
 }
