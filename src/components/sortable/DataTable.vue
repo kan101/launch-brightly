@@ -3,9 +3,9 @@
     <h1 class="text-left mb-8 text-4xl">{{ tableInfo().name }}</h1>
     <div class="overflow-x-auto">
       <table class="table">
-        <DataTableHeader @sort-table="toSort" data-test="data-table-header"/>
+        <DataTableHeader @sort-table="toSort" />
         <tbody>
-          <DataTableRow :row-data="rowData" data-test="data-table-row"/>
+          <DataTableRow :row-data="rowData" />
         </tbody>
       </table>
     </div>

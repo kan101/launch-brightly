@@ -23,7 +23,6 @@
               "
             />
             <span
-              data-test="column-label"
               v-if="column.key === 'edition' ? !showEditionFilter : true"
               class="mr-4"
               >{{ column.label }}</span
@@ -35,7 +34,7 @@
               id="filter-input"
               type="text"
               placeholder="Filter Editions"
-              class="h-6 bg-transparent border-b mr-4 border-gray-500 focus:outline-none focus:border-blue-500 w-28"
+              class="h-6 bg-transparent border-b mr-4 rounded-none border-gray-500 focus:outline-none w-28"
             />
           </article>
           <article

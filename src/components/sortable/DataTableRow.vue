@@ -13,8 +13,7 @@ import type { PropType } from "vue";
 import type { Columns } from "../../types.ts";
 import dayjs from "dayjs";
 
-// @ts-ignore
-const props = defineProps({
+defineProps({
   rowData: { type: Array as PropType<Columns[]>, required: true },
 });
 </script>
