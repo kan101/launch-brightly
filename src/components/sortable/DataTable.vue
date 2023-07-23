@@ -18,7 +18,7 @@ import DataTableRow from "./DataTableRow.vue";
 import { useData } from "../../hooks/useData";
 import { ref } from "vue";
 
-const { cleanData, sortData, filterData, tableInfo } = useData("");
+const { cleanData, sortData, filterData, tableInfo } = useData();
 const rowData = ref(cleanData());
 const unfilteredUnsortedData = rowData.value;
 

@@ -2,9 +2,7 @@ import data from "./baremetrics.json";
 import dayjs from "dayjs";
 import type { Columns } from "../types";
 
-export function useData(filterString: string) {
-  if (filterString === "") {
-  }
+export function useData() {
 
   function cleanData() {
     const items: Columns[] = [];
@@ -14,8 +12,9 @@ export function useData(filterString: string) {
         name: item.name || "",
         description: item.description || "",
         edition: item.FeatureEditions.items[0].edition.name || "",
+        // use unix timestamp to ease sorting
         time_of_screenshot:
-          String(dayjs(item.screenshots.items[0].timeOfCapture).unix()) || "",
+          dayjs(item.screenshots.items[0].timeOfCapture).unix() || 0,
       });
     });
 
@@ -42,12 +41,12 @@ export function useData(filterString: string) {
 
   function sortAsc(data: Columns[], sortBy: string) {
     if (sortBy === "time") {
-      return sortTimeAsc(data);
+      return sortTime(data, "asc");
     }
 
     data.sort((a, b) => {
-      const itemA = a[sortBy].toUpperCase();
-      const itemB = b[sortBy].toUpperCase();
+      const itemA = String(a[sortBy]).toUpperCase();
+      const itemB = String(b[sortBy]).toUpperCase();
       if (itemA < itemB) {
         return -1;
       }
@@ -61,12 +60,12 @@ export function useData(filterString: string) {
 
   function sortDesc(data: Columns[], sortBy: string) {
     if (sortBy === "time") {
-      return sortTimeDesc(data);
+      return sortTime(data, "desc");
     }
 
     data.sort((a, b) => {
-      const itemA = a[sortBy].toUpperCase();
-      const itemB = b[sortBy].toUpperCase();
+      const itemA = String(a[sortBy]).toUpperCase();
+      const itemB = String(b[sortBy]).toUpperCase();
       if (itemA > itemB) {
         return -1;
       }
@@ -78,31 +77,11 @@ export function useData(filterString: string) {
     });
   }
 
-  function sortTimeAsc(data: Columns[]) {
+  function sortTime(data: Columns[], sortDirection: string) {
     data.sort((a, b) => {
-      const itemA = dayjs(a.time_of_screenshot);
-      const itemB = dayjs(b.time_of_screenshot);
-      if (itemA.isBefore(itemB)) {
-        return -1;
-      }
-      if (itemA.isAfter(itemB)) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  function sortTimeDesc(data: Columns[]) {
-    data.sort((a, b) => {
-      const itemA = dayjs(a.time_of_screenshot);
-      const itemB = dayjs(b.time_of_screenshot);
-      if (itemA.isAfter(itemB)) {
-        return -1;
-      }
-      if (itemA.isBefore(itemB)) {
-        return 1;
-      }
-      return 0;
+      if (sortDirection === "asc") {
+        return a.time_of_screenshot - b.time_of_screenshot;
+      } else return b.time_of_screenshot - a.time_of_screenshot;
     });
   }
 
