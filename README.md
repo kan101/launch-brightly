@@ -2,7 +2,7 @@
 
 ## Summary
 
-This project uses a public JSON file and builds a single-page, responsive, and sortable table using Vue 3, TypeScript and Tailwind CSS. The JSON data is retrieved from the URL: [https://content.launchbrightly.com/lbdemo/baremetrics.json](https://content.launchbrightly.com/lbdemo/baremetrics.json). The table columns include "ID", "Name", "Description", "Editions" and "Time of Screenshot". Column headers are clickable for ascending/descending sorting, and the "Edition(s)" column has a filter that works with sorting.
+This project uses a public JSON file and builds a single-page, responsive, and sortable table using Vue 3, TypeScript and Tailwind CSS. The JSON data is retrieved from the URL: [https://content.launchbrightly.com/lbdemo/baremetrics.json](https://content.launchbrightly.com/lbdemo/baremetrics.json). The table columns include "ID", "Name", "Description", "Editions" and "Time of Screenshot". Column headers are clickable for ascending/descending sorting, and the "Editions" column has a filter that works with sorting.
 
 ## Project Details
 
@@ -19,11 +19,11 @@ This project uses a public JSON file and builds a single-page, responsive, and s
 
 ## Deployment
 
-The live version of the project will be hosted on AWS, specifically on Amazon S3, for easy access and testing. You can find the live URL and the source code on GitHub below.
+You can find the live URL and the source code on GitHub below.
 
 ## Live URL
 
-[Live Demo on Amazon S3]("")
+[Live Demo](https://launch-brightly.netlify.app/)
 
 ## GitHub Repository
 
