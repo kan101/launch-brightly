@@ -92,7 +92,7 @@ function sortColumn(key: string) {
 
 async function filterEditions() {
   if (filterString.value.length > 2) {
-    await sleep(500);
+    await sleep(200);
     updateTable();
   }
 }
