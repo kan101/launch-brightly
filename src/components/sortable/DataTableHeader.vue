@@ -87,23 +87,13 @@ const filterString = ref("");
 function sortColumn(key: string) {
   currentSortColumn.value = key;
   currentSortDir.value = currentSortDir.value === "asc" ? "desc" : "asc";
-  emit(
-    "sort-table",
-    currentSortColumn.value,
-    currentSortDir.value,
-    filterString.value
-  );
+  updateTable();
 }
 
 async function filterEditions() {
   if (filterString.value.length > 2) {
     await sleep(500);
-    emit(
-      "sort-table",
-      currentSortColumn.value,
-      currentSortDir.value,
-      filterString.value
-    );
+    updateTable();
   }
 }
 
@@ -114,6 +104,10 @@ function sortState(key: string) {
 function clearFilter() {
   showEditionFilter.value = false;
   filterString.value = "";
+  updateTable();
+}
+
+function updateTable() {
   emit(
     "sort-table",
     currentSortColumn.value,
