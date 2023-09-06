@@ -27,6 +27,6 @@ You can find the live URL and the source code on GitHub below.
 
 ## GitHub Repository
 
-[GitHub Repository](https://github.com/kan101/launch-brightly)
+[GitHub Repository](https://github.com/kan101/vue3-datatable)
 
 Feel free to explore the live demo and the source code on GitHub. If you have any questions or feedback, please don't hesitate to contact me.
