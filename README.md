@@ -23,7 +23,7 @@ You can find the live URL and the source code on GitHub below.
 
 ## Live URL
 
-[Live Demo](https://launch-brightly.netlify.app/)
+[Live Demo](https://vue3-table.netlify.app/)
 
 ## GitHub Repository
 
