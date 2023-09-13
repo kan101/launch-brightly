@@ -2,13 +2,13 @@
 
 ## Summary
 
-This project uses a public JSON file and builds a single-page, responsive, and sortable table using Vue 3, TypeScript and Tailwind CSS. The JSON data is retrieved from the URL: [https://content.launchbrightly.com/lbdemo/baremetrics.json](https://content.launchbrightly.com/lbdemo/baremetrics.json). The table columns include "ID", "Name", "Description", "Editions" and "Time of Screenshot". Column headers are clickable for ascending/descending sorting, and the "Editions" column has a filter that works with sorting.
+This project uses a public JSON file and builds a single-page, responsive, and sortable table using Vue 3, TypeScript and Tailwind CSS. The table columns include "ID", "Name", "Description", "Editions" and "Time of Screenshot". Column headers are clickable for ascending/descending sorting, and the "Editions" column has a filter that works with sorting.
 
 ## Project Details
 
 - **Vue Version:** Vue 3.2 with the Script Setup.
 - **CSS Framework:** Tailwind CSS.
-- **Data Source:** JSON file from [https://content.launchbrightly.com/lbdemo/baremetrics.json](https://content.launchbrightly.com/lbdemo/baremetrics.json).
+- **Data Source:** JSON file.
 - **Column Headers:** Clickable for ascending/descending sorting.
 - **Edition Column:** Has a filter on Editions and works seamlessly with sorting.
 
